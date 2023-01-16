@@ -1,0 +1,28 @@
+apiVersion: apps.birdhk.top/v2
+kind: Application
+metadata:
+  name: application-sample-v2
+spec:
+  workflow:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: nginx
+    template:
+      metadata:
+        labels:
+          app: nginx
+      spec:
+        containers:
+          - image: nginx:1.14.2
+            name: nginx
+            ports:
+              - containerPort: 80
+                name: http
+                protocol: TCP
+            resources: { }
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: { }
+        terminationGracePeriodSeconds: 30
