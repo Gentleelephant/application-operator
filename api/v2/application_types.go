@@ -20,6 +20,7 @@ import (
 	v1 "github.com/Gentleelephant/application-operator/api/v1"
 	apps "k8s.io/api/apps/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"sigs.k8s.io/controller-runtime/pkg/conversion"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -58,6 +59,26 @@ type ApplicationList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
 	Items           []Application `json:"items"`
+}
+
+func (src *Application) ConvertTo(dstRaw conversion.Hub) error {
+	dst := dstRaw.(*v1.Application)
+
+	dst.ObjectMeta = src.ObjectMeta
+	dst.Spec.Deployment = src.Spec.Workflow
+	dst.Status.Workflow = src.Status.Workflow
+
+	return nil
+}
+
+func (dst *Application) ConvertFrom(srcRaw conversion.Hub) error {
+	src := srcRaw.(*v1.Application)
+
+	dst.ObjectMeta = src.ObjectMeta
+	dst.Spec.Workflow = src.Spec.Deployment
+	dst.Status.Workflow = src.Status.Workflow
+
+	return nil
 }
 
 func init() {
