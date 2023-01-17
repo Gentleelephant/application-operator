@@ -20,6 +20,7 @@ import (
 	v1 "github.com/Gentleelephant/application-operator/api/v1"
 	apps "k8s.io/api/apps/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/conversion"
 )
 
@@ -30,7 +31,7 @@ import (
 type ApplicationSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Workflow v1.DeploymentTemplate `json:"deployment,omitempty"`
+	Workflow v1.DeploymentTemplate `json:"workflow,omitempty"`
 }
 
 // ApplicationStatus defines the observed state of Application
@@ -79,6 +80,12 @@ func (dst *Application) ConvertFrom(srcRaw conversion.Hub) error {
 	dst.Status.Workflow = src.Status.Workflow
 
 	return nil
+}
+
+func (r *Application) SetupWebhookWithManager(mgr ctrl.Manager) error {
+	return ctrl.NewWebhookManagedBy(mgr).
+		For(r).
+		Complete()
 }
 
 func init() {

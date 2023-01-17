@@ -2,6 +2,8 @@ apiVersion: apps.birdhk.top/v2
 kind: Application
 metadata:
   name: application-sample-v2
+  labels:
+    app: nginx
 spec:
   workflow:
     replicas: 1
