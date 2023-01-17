@@ -64,10 +64,10 @@ type ApplicationList struct {
 
 func (src *Application) ConvertTo(dstRaw conversion.Hub) error {
 	dst := dstRaw.(*v1.Application)
-
+	//
 	dst.ObjectMeta = src.ObjectMeta
-	dst.Spec.Deployment = src.Spec.Workflow
-	dst.Status.Workflow = src.Status.Workflow
+	//dst.Spec.Deployment = src.Spec.Workflow
+	//dst.Status.Workflow = src.Status.Workflow
 
 	return nil
 }
@@ -76,8 +76,8 @@ func (dst *Application) ConvertFrom(srcRaw conversion.Hub) error {
 	src := srcRaw.(*v1.Application)
 
 	dst.ObjectMeta = src.ObjectMeta
-	dst.Spec.Workflow = src.Spec.Deployment
-	dst.Status.Workflow = src.Status.Workflow
+	//dst.Spec.Workflow = src.Spec.Deployment
+	//dst.Status.Workflow = src.Status.Workflow
 
 	return nil
 }

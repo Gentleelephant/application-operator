@@ -4,6 +4,7 @@ metadata:
   labels:
     app: nginx
   name: application-sample-v1
+  namespace: application-operator-system
 spec:
   deployment:
     replicas: 1

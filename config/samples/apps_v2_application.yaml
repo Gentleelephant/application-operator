@@ -4,6 +4,7 @@ metadata:
   name: application-sample-v2
   labels:
     app: nginx
+  namespace: application-operator-system
 spec:
   workflow:
     replicas: 1
